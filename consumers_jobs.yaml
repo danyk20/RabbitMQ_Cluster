@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: benchmark-producer-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+        - name: benchmark-producer
+          image: gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.0.1
+          env:
+            - name: BROKER_IP
+              value: "spare-c2e38-30-04"
+            - name: MQTT_PORT
+              value: "30150"
+          volumeMounts:
+            - mountPath: /data
+              name: data-volume
+          command: ["/opt/benchmark/bin/consumer"]
+          args: ["--username", "default_user_IA25ZnsK4W-fVt5dqAk", "--password", "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs", "--qos", "1", "--duration", "1000", "--middle", "80"]
+      volumes:
+        - name: data-volume
+          hostPath:
+            path: ./data
+      restartPolicy: Never
