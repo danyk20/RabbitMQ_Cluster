@@ -11,6 +11,7 @@ docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:
 ```shell
 kubectl apply -f rabbitmq_operator.yaml
 kubectl apply -f rabbitmq_storage.yaml
+kubectl apply -f rabbitmq_secret.yaml
 kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
 kubectl apply -f rabbitmq_cluster.yaml
 ```
