@@ -1,6 +1,12 @@
 # RabbitMQ cluster
 This project will guid you to create your own RabbitMQ cluster and test its performance.
 
+## Prerequisites
+
+```shell
+docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.0.5
+```
+
 # Deploy RabbitMQ cluster using Kubernetes
 ```shell
 kubectl apply -f rabbitmq_operator.yaml

@@ -1,0 +1,49 @@
+broker: spare-c2e38-30-04
+port: 30150
+
+producer:
+  version: 0.0.0.5
+  name: benchmark-producer-job
+  instances:
+    total: 20
+    parallel: 20
+  flags:
+    [
+      "--period",
+      "0",
+      "--min",
+      "1",
+      "--max",
+      "8192",
+      "--username",
+      "default_user_IA25ZnsK4W-fVt5dqAk",
+      "--password",
+      "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+      "--qos",
+      "1",
+      "--messages",
+      "1000",
+    ]
+  path: /nfshome0/dkosc/data
+
+consumer:
+  version: 0.0.0.5
+  name: benchmark-consumer-job
+  instances:
+    total: 1
+    parallel: 1
+  flags:
+    [
+      "--username",
+      "default_user_IA25ZnsK4W-fVt5dqAk",
+      "--password",
+      "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+      "--qos",
+      "1",
+      "--separators",
+      "4",
+      "--directory",
+      "data",
+      "-f",
+    ]
+  path: /nfshome0/dkosc/data
