@@ -16,13 +16,6 @@ kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-c
 kubectl apply -f rabbitmq_cluster.yaml
 ```
 
-# Show credentials (username & password)
-```shell
-echo $(kubectl get secret rabbit-cluster-default-user -o jsonpath="{.data.username}" | base64 --decode)
-echo $(kubectl get secret rabbit-cluster-default-user -o jsonpath="{.data.password}" | base64 --decode)
-
-```
-
 # Run measurement 
 - Using [MQTT Benchmark](https://github.com/danyk20/MQTT_Benchmark) 
 ```shell
