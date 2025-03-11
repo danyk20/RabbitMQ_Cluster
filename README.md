@@ -8,6 +8,10 @@ docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:
 ```
 
 # Deploy RabbitMQ cluster using Kubernetes
+
+## Manual
+
+### RabbitMQ cluster deployment
 ```shell
 kubectl apply -f rabbitmq_operator.yaml
 kubectl apply -f rabbitmq_storage.yaml
@@ -16,9 +20,18 @@ kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-c
 kubectl apply -f rabbitmq_cluster.yaml
 ```
 
-# Run measurement 
+### Run measurement 
 - Using [MQTT Benchmark](https://github.com/danyk20/MQTT_Benchmark) 
 ```shell
 kubectl apply -f consumers_jobs.yaml
 kubectl apply -f publishers_jobs.yaml
+```
+
+## Helm charts
+
+- You can adjust `values.yaml` file in both `rabbitmq-cluster-operator` and `benchmark` directory to reflect your needs.
+
+```shell
+helm install rabbitmq-operator rabbitmq-cluster-operator/
+helm install benchmark benchmark/
 ```

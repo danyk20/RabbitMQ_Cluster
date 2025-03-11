@@ -1,5 +1,14 @@
 broker: spare-c2e38-30-04
-port: 30150
+port: 31883
+
+rabbitmq:
+  replicas: 3
+  username: user
+  password: password
+  nodeport:
+    mqtt: 31883
+    management: 31567
+    amqp: 30567
 
 producer:
   version: 0.0.0.5
@@ -13,12 +22,13 @@ producer:
     "--period", "0",
     "--min", "72",
     "--max", "72",
-    "--username", "default_user_IA25ZnsK4W-fVt5dqAk",
-    "--password", "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+    "--username", "user",
+    "--password", "password",
     "--qos", "1",
     "--messages", "10000000"
     ]'
   path: /nfshome0/dkosc/data
+  init_timeout: 600
 
 consumer:
   version: 0.0.0.5
@@ -28,11 +38,12 @@ consumer:
     parallel: 1
   flags:
     '[
-    "--username", "default_user_IA25ZnsK4W-fVt5dqAk",
-    "--password", "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+    "--username", "user",
+    "--password", "password",
     "--qos", "1",
     "--duration", "100",
     "--ratio", "80",
     "--fresh"
     ]'
   path: /nfshome0/dkosc/data
+  init_timeout: 600
