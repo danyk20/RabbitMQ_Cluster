@@ -17,16 +17,16 @@ producer:
     total: 2
     parallel: 2
   flags:
-    '[
-    "--fresh",
-    "--period", "0",
-    "--min", "72",
-    "--max", "72",
-    "--username", "user",
-    "--password", "password",
-    "--qos", "1",
-    "--messages", "10000000"
-    ]'
+    '
+    --fresh 
+    --period 0 
+    --min 72 
+    --max 72 
+    --username user 
+    --password password 
+    --qos 1 
+    --messages 10000000
+    '
   path: /nfshome0/dkosc/data
   init_timeout: 600
 
@@ -37,13 +37,13 @@ consumer:
     total: 1
     parallel: 1
   flags:
-    '[
-    "--username", "user",
-    "--password", "password",
-    "--qos", "1",
-    "--duration", "100",
-    "--ratio", "80",
-    "--fresh"
-    ]'
+    '
+    --username user 
+    --password password 
+    --qos 1 
+    --duration 100 
+    --ratio 80 
+    --fresh
+    '
   path: /nfshome0/dkosc/data
   init_timeout: 600

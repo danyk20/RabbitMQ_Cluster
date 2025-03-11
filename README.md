@@ -35,3 +35,9 @@ kubectl apply -f publishers_jobs.yaml
 helm install rabbitmq-operator rabbitmq-cluster-operator/
 helm install benchmark benchmark/
 ```
+
+### Remove all deployed pods
+```shell
+helm uninstall rabbitmq-operator
+helm uninstall benchmark 
+```

@@ -18,8 +18,10 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data-volume
-          command: ["/bin/sh", "-c", "curl --retry-connrefused --retry {{ .Values.producer.init_timeout }} --retry-delay 1 -u '{{ .Values.rabbitmq.username }}:{{ .Values.rabbitmq.password }}' 'http://rabbit-cluster:15672/api/nodes' && /opt/benchmark/bin/producer"]
-          args: {{ .Values.producer.flags }}
+          command: [
+            "/bin/sh", "-c",
+            "curl --retry-connrefused --retry {{ .Values.producer.init_timeout }} --retry-delay 1 -u '{{ .Values.rabbitmq.username }}:{{ .Values.rabbitmq.password }}' 'http://rabbit-cluster:15672/api/nodes' && /opt/benchmark/bin/producer {{ .Values.producer.flags }}"
+          ]
       volumes:
         - name: data-volume
           hostPath:
