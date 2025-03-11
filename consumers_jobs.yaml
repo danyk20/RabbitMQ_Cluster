@@ -20,8 +20,8 @@ spec:
               name: data-volume
           command: [ "/opt/benchmark/bin/consumer" ]
           args: [
-            "--username", "default_user_IA25ZnsK4W-fVt5dqAk",
-            "--password", "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+            "--username", "username",
+            "--password", "password",
             "--qos", "1",
             "--separators", "4",
             "--directory", "data",

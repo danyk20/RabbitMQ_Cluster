@@ -22,8 +22,8 @@ spec:
           args: ["--period", "0",
                  "--min", "1",
                  "--max", "8192",
-                 "--username", "default_user_IA25ZnsK4W-fVt5dqAk",
-                 "--password", "Mmsq35eOrI_iFNpl7uIPAXPX17B73pAs",
+                 "--username", "username",
+                 "--password", "password",
                  "--qos", "1",
                  "--messages", "1000"]
       volumes:
