@@ -7,6 +7,18 @@ spec:
   parallelism: 2
   template:
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: job-name
+                      operator: In
+                      values:
+                        - benchmark-producer-job
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: benchmark-producer
           image: gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.0.5
@@ -14,18 +26,21 @@ spec:
             - name: BROKER_IP
               value: "spare-c2e38-30-04"
             - name: MQTT_PORT
-              value: "30150"
+              value: "31883"
           volumeMounts:
             - mountPath: /data
               name: data-volume
           command: ["/opt/benchmark/bin/producer"]
-          args: ["--period", "0",
-                 "--min", "1",
-                 "--max", "8192",
-                 "--username", "username",
-                 "--password", "password",
-                 "--qos", "1",
-                 "--messages", "1000"]
+          args: [
+            "--fresh",
+            "--period", "0",
+            "--min", "72",
+            "--max", "72",
+            "--username", "user",
+            "--password", "password",
+            "--qos", "1",
+            "--messages", "10000000"
+          ]
       volumes:
         - name: data-volume
           hostPath:
