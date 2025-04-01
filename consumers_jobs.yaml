@@ -21,7 +21,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
         - name: benchmark-consumer
-          image: gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.0.8
+          image: gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.0.9
           env:
             - name: BROKER_IP
               value: "spare-c2e38-30-04"
@@ -37,7 +37,6 @@ spec:
             "--qos", "1",
             "--duration", "100",
             "--ratio", "80",
-            "--fresh"
           ]
       volumes:
         - name: data-volume
