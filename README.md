@@ -27,6 +27,20 @@ kubectl apply -f consumers_jobs.yaml
 kubectl apply -f publishers_jobs.yaml
 ```
 
+### Run measurement cleanup
+```shell
+kubectl delete -f consumers_jobs.yaml
+kubectl delete -f publishers_jobs.yaml
+```
+
+### RabbitMQ cluster cleanup
+```shell
+kubectl delete -f rabbitmq_cluster.yaml
+kubectl delete -f rabbitmq_secret.yaml
+kubectl delete -f rabbitmq_storage.yaml
+kubectl delete -f rabbitmq_operator.yaml
+```
+
 ## Helm charts
 
 - You can adjust `values.yaml` file in both `rabbitmq-cluster-operator` and `benchmark` directory to reflect your needs.
