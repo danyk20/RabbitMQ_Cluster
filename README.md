@@ -24,13 +24,13 @@ kubectl apply -f rabbitmq_cluster.yaml
 - Using [MQTT Benchmark](https://github.com/danyk20/MQTT_Benchmark) 
 ```shell
 kubectl apply -f consumers_jobs.yaml
-kubectl apply -f publishers_jobs.yaml
+kubectl apply -f producers_jobs.yaml
 ```
 
 ### Run measurement cleanup
 ```shell
 kubectl delete -f consumers_jobs.yaml
-kubectl delete -f publishers_jobs.yaml
+kubectl delete -f producers_jobs.yaml
 ```
 
 ### RabbitMQ cluster cleanup
