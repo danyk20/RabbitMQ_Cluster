@@ -32,5 +32,6 @@ spec:
   rabbitmq:
     additionalConfig: |
       log.console.level = debug
+      mqtt.durable_queue_type = quorum
     additionalPlugins:
       - rabbitmq_mqtt
