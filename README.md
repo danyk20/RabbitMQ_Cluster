@@ -1,6 +1,39 @@
 # RabbitMQ cluster
 
-This project will guide you to create your own RabbitMQ cluster and test its performance using MQTT benchmark tool.
+This project will guide you to test performance by MQTT Benchmark tool and create your own RabbitMQ cluster using
+individual Kubernetes components or Helm chart.
+
+## RabbitMQ Operator
+
+The RabbitMQ Operator is a Kubernetes controller that simplifies the deployment and management of RabbitMQ clusters. It
+automates tasks like cluster creation, scaling, and configuration through a custom resource (RabbitmqCluster). The
+operator runs in the rabbitmq-system namespace and handles StatefulSet management, service creation, and secret handling
+for credentials. It ensures proper cluster formation with features like peer discovery, persistence, and TLS
+configuration. The operator also monitors cluster health and provides status conditions to track readiness. RBAC rules
+grant it necessary permissions to manage RabbitMQ resources while maintaining security isolation. The deployment uses a
+single replica with defined resource limits for reliable operation.
+
+## Configuration of the cluster
+
+The provided configuration defines a highly available RabbitMQ cluster with three replicas for fault tolerance. It uses
+the rabbitmq:3.12-management image with the MQTT plugin enabled, exposing ports for AMQP (5672), MQTT (1883), and
+management (15672) via NodePort services. The cluster is configured with durable quorum queues and debug-level logging.
+Credentials are managed securely via a Kubernetes Secret (user:password), and the setup includes custom resource limits
+(defaulting to 2 CPU / 2GB memory). The cluster supports persistent storage (10Gi by default). Additional RabbitMQ
+configurations can be injected via additionalConfig, while anti-affinity rules help distribute pods across nodes for
+resilience. The built-in management UI is accessible via NodePort 31672. Individual Kubernetes components are mapped 1:1
+to Helm charts /benchmark and
+/rabbit-cluster-operator.
+
+## MQTT benchmark configuration (producers_jobs.yaml and consumers_jobs.yaml)
+
+The producer and consumer jobs are designed to benchmark RabbitMQ performance under load. The producer job runs two
+parallel instances, each sending 10 million fixed-size messages (72 bytes) at maximum speed (--period 0) with QoS 1 for
+reliable delivery. The consumer job runs a single instance with QoS 1, processing the last 80% of the 100-second test
+duration. Both jobs use pod anti-affinity to distribute workloads across different nodes, avoiding resource contention.
+They connect to RabbitMQ via NodePort 31883 (MQTT protocol) using credentials from the credentials Secret and store
+benchmark data in a hostPath volume `~/data`. The jobs leverage a custom Docker image `cmsos-x86_64-rabbitmq:0.0.1.0`
+containing benchmarking tools.
 
 ## Prerequisites
 
@@ -30,7 +63,7 @@ kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-c
 kubectl apply -f rabbitmq_cluster.yaml
 ```
 
-### Run measurement
+### Run measurement using the MQTT benchmark tool
 
 - Using [MQTT Benchmark](https://github.com/danyk20/MQTT_Benchmark)
 
