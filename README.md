@@ -16,7 +16,7 @@ docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:
     - quorum queues are replicated by design
     - based on the Raft consensus algorithm, ensuring that messages are replicated across multiple nodes before being
       acknowledged—this prevents data loss even if a node fails
-    - leader election automatically using Raft. If the leader node fails, a new leader is elected seamlessly
+    - leader election is automatically using Raft—if the leader node fails, a new leader is elected seamlessly
 
 ## Manual deployment of individual Kubernetes components
 
