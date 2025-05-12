@@ -32,7 +32,7 @@ producer:
     --qos 1 
     --messages 10000000
     '
-  path: "/nfshome0/dkosc/data"
+  path: "~/data"
   init_timeout: 600
 
 consumer:
@@ -50,5 +50,5 @@ consumer:
     --ratio 80 
     --fresh
     '
-  path: "/nfshome0/dkosc/data"
+  path: "~/data"
   init_timeout: 600

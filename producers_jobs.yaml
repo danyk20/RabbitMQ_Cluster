@@ -43,5 +43,5 @@ spec:
       volumes:
         - name: data-volume
           hostPath:
-            path: /nfshome0/dkosc/data
+            path: ~/data
       restartPolicy: Never
