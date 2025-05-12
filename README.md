@@ -67,6 +67,6 @@ helm install benchmark benchmark/
 ### Remove all deployed pods
 
 ```shell
-helm uninstall rabbitmq-operator
 helm uninstall benchmark 
+helm uninstall rabbitmq-operator
 ```
