@@ -1,8 +1,13 @@
-broker: spare-c2e38-30-04
-port: 31883
+broker:
+  ip: spare-c2e38-30-04
+  port: 31883
 
 rabbitmq:
   replicas: 3
+  log: debug
+  queue: quorum
+  plugins:
+    - rabbitmq_mqtt
   username: user
   password: password
   nodeport:

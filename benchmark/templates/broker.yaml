@@ -31,10 +31,12 @@ spec:
       name: "credentials"
   rabbitmq:
     additionalConfig: |
-      log.console.level = debug
-      mqtt.durable_queue_type = quorum
+      log.console.level = {{ .Values.rabbitmq.log }} 
+      mqtt.durable_queue_type = {{ .Values.rabbitmq.queue }}
     additionalPlugins:
-      - rabbitmq_mqtt
+      {{ - range .Values.rabbitmq.additionalPlugins }}
+      - {{ . }}
+      {{ - end }}
 ---
 apiVersion: v1
 kind: Secret
