@@ -31,7 +31,7 @@ spec:
       name: "credentials"
   rabbitmq:
     additionalConfig: |
-      log.console.level = {{ .Values.rabbitmq.log }} 
+      log.console.level = {{ .Values.rabbitmq.log }}
       mqtt.durable_queue_type = {{ .Values.rabbitmq.queue }}
     additionalPlugins:
       {{- range .Values.rabbitmq.plugins }}
@@ -47,13 +47,13 @@ stringData:
   default_user.conf: |
     default_user = {{ .Values.rabbitmq.username }}
     default_pass = {{ .Values.rabbitmq.password }}
-  host: cmFiYml0LWNsdXN0ZXIuZGVmYXVsdC5zdmM
-  username: {{ .Values.rabbitmq.username }}
-  password: {{ .Values.rabbitmq.password }}
+  host: "cmFiYml0LWNsdXN0ZXIuZGVmYXVsdC5zdmM"
+  username: "{{ .Values.rabbitmq.username }}"
+  password: "{{ .Values.rabbitmq.password }}"
   port: "5672"
   mqtt-port: "1883"
-  provider: rabbitmq
-  type: rabbitmq
+  provider: "rabbitmq"
+  type: "rabbitmq"
 ---
 apiVersion: v1
 kind: Namespace

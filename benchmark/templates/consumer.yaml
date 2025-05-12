@@ -21,7 +21,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
         - name: benchmark-consumer
-          image: gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:{{ .Values.consumer.version }}
+          image: "gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:{{ .Values.consumer.version }}"
           env:
             - name: BROKER_IP
               value: "{{ .Values.broker.ip }}"

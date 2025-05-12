@@ -1,15 +1,15 @@
 broker:
-  ip: spare-c2e38-30-04
+  ip: "spare-c2e38-30-04"
   port: 31883
 
 rabbitmq:
   replicas: 3
-  log: debug
-  queue: quorum
+  log: "debug"
+  queue: "quorum"
   plugins:
     - rabbitmq_mqtt
-  username: user
-  password: password
+  username: "user"
+  password: "password"
   nodeport:
     mqtt: 31883
     management: 31567
@@ -17,7 +17,7 @@ rabbitmq:
 
 producer:
   version: 0.0.1.0
-  name: benchmark-producer-job
+  name: "benchmark-producer-job"
   instances:
     total: 2
     parallel: 2
@@ -32,12 +32,12 @@ producer:
     --qos 1 
     --messages 10000000
     '
-  path: /nfshome0/dkosc/data
+  path: "/nfshome0/dkosc/data"
   init_timeout: 600
 
 consumer:
   version: 0.0.1.0
-  name: benchmark-consumer-job
+  name: "benchmark-consumer-job"
   instances:
     total: 1
     parallel: 1
@@ -50,5 +50,5 @@ consumer:
     --ratio 80 
     --fresh
     '
-  path: /nfshome0/dkosc/data
+  path: "/nfshome0/dkosc/data"
   init_timeout: 600
