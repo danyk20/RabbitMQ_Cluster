@@ -34,7 +34,7 @@ spec:
       log.console.level = {{ .Values.rabbitmq.log }} 
       mqtt.durable_queue_type = {{ .Values.rabbitmq.queue }}
     additionalPlugins:
-      {{- range .Values.rabbitmq.additionalPlugins }}
+      {{- range .Values.rabbitmq.plugins }}
       - {{ . }}
       {{- end }}
 ---
