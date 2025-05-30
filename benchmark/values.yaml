@@ -34,6 +34,8 @@ producer:
     '
   path: "~/data"
   init_timeout: 600
+  node:
+    prefix: "d3vrubu"
 
 consumer:
   version: 0.0.1.3
@@ -52,3 +54,5 @@ consumer:
     '
   path: "~/data"
   init_timeout: 600
+  node:
+    prefix: "d3vrubu"
