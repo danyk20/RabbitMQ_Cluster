@@ -15,7 +15,9 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: In
                     values:
-                      - "{{ .Values.producer.node.prefix}}*"
+                      {{- range .Values.producer.node.hostnames }}
+                      - {{ . }}
+                      {{- end }}
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 100
