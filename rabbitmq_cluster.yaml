@@ -4,6 +4,25 @@ metadata:
   name: rabbit-cluster
 spec:
   replicas: 3
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - d3vrubu-c2e34-10-01
+                      - d3vrubu-c2e34-12-01
+                      - d3vrubu-c2e34-14-01
+                      - d3vrubu-c2e34-16-01
+                      - d3vrubu-c2e34-18-01
+                      - d3vrubu-c2e34-29-01
+                      - d3vrubu-c2e34-31-01
+                      - d3vrubu-c2e34-33-01
+                      - d3vrubu-c2e34-35-01
   service:
     type: NodePort
   override:
