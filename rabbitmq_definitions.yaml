@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rabbitmq-guest-user
+type: Opaque
+stringData:
+  username: "guest"
+  password: "guest"
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Vhost
+metadata:
+  name: default-vhost
+spec:
+  name: /
+  rabbitmqClusterReference:
+    name: rabbit-cluster
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: guest
+spec:
+  importCredentialsSecret:
+    name: rabbitmq-guest-user
+  tags:
+    - monitoring
+  rabbitmqClusterReference:
+    name: rabbit-cluster
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: guest-all-permissions
+spec:
+  user: guest
+  vhost: /
+  permissions:
+    read: ".*"
+    write: ".*"
+    configure: ".*"
+  rabbitmqClusterReference:
+    name: rabbit-cluster
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: max-length-policy
+spec:
+  name: max_length_policy
+  pattern: ".*"
+  applyTo: queues
+  definition:
+    maxLength: 100000
+  priority: 0
+  vhost: "/"
+  rabbitmqClusterReference:
+    name: rabbit-cluster
