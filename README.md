@@ -73,6 +73,7 @@ kubectl apply -f rabbitmq_operator.yaml
 kubectl apply -f rabbitmq_storage.yaml
 kubectl apply -f rabbitmq_secret.yaml
 kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
+kubectl apply -f rabbitmq_definitions.yaml
 kubectl apply -f rabbitmq_cluster.yaml
 ```
 
@@ -95,6 +96,7 @@ kubectl delete -f producers_jobs.yaml
 ### RabbitMQ cluster cleanup
 
 ```shell
+kubectl delete -f rabbitmq_definitions.yaml
 kubectl delete -f rabbitmq_cluster.yaml
 kubectl delete -f rabbitmq_secret.yaml
 kubectl delete -f rabbitmq_storage.yaml
