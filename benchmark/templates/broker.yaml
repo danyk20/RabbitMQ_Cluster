@@ -1,9 +1,29 @@
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  name: rabbit-cluster
+  name: {{ .Values.rabbitmq.name }}
 spec:
   replicas: {{ .Values.rabbitmq.replicas }}
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  {{- range .Values.rabbitmq.node.hostnames }}
+                  - {{ . }}
+                  {{- end }}
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - {{ .Values.rabbitmq.name }}
+          topologyKey: "kubernetes.io/hostname"
   template:
     spec:
       affinity:
@@ -45,7 +65,7 @@ spec:
   rabbitmq:
     additionalConfig: |
       log.console.level = {{ .Values.rabbitmq.log }}
-      mqtt.durable_queue_type = {{ .Values.rabbitmq.queue }}
+      mqtt.durable_queue_type = {{ .Values.rabbitmq.queue.type }}
     additionalPlugins:
       {{- range .Values.rabbitmq.plugins }}
       - {{ . }}
@@ -58,11 +78,11 @@ metadata:
 type: Opaque
 stringData:
   default_user.conf: |
-    default_user = {{ .Values.rabbitmq.username }}
-    default_pass = {{ .Values.rabbitmq.password }}
+    default_user = {{ .Values.rabbitmq.client.username }}
+    default_pass = {{ .Values.rabbitmq.client.password }}
   host: "cmFiYml0LWNsdXN0ZXIuZGVmYXVsdC5zdmM"
-  username: "{{ .Values.rabbitmq.username }}"
-  password: "{{ .Values.rabbitmq.password }}"
+  username: "{{ .Values.rabbitmq.client.username }}"
+  password: "{{ .Values.rabbitmq.client.password }}"
   port: "5672"
   mqtt-port: "1883"
   provider: "rabbitmq"
@@ -231,3 +251,64 @@ data:
         - name: helper-pod
           image: busybox
           imagePullPolicy: IfNotPresent
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rabbitmq-guest-user
+type: Opaque
+stringData:
+  username: "{{ .Values.rabbitmq.root.user }}"
+  password: "{{ .Values.rabbitmq.root.password }}"
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Vhost
+metadata:
+  name: default-vhost
+spec:
+  name: /
+  rabbitmqClusterReference:
+    name: {{ .Values.rabbitmq.name }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: guest
+spec:
+  importCredentialsSecret:
+    name: rabbitmq-guest-user
+  tags:
+    - monitoring
+  rabbitmqClusterReference:
+    name: {{ .Values.rabbitmq.name }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: guest-all-permissions
+spec:
+  user: guest
+  vhost: /
+  permissions:
+    read: ".*"
+    write: ".*"
+    configure: ".*"
+  rabbitmqClusterReference:
+    name: {{ .Values.rabbitmq.name }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: max-length-policy
+spec:
+  name: max_length_policy
+  pattern: ".*"
+  applyTo: queues
+  definition:
+    maxLength: {{ .Values.rabbitmq.queue.max_length }}
+  priority: 0
+  vhost: "/"
+  rabbitmqClusterReference:
+    name: {{ .Values.rabbitmq.name }}
+

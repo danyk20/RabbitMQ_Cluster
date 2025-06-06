@@ -4,12 +4,19 @@ broker:
 
 rabbitmq:
   replicas: 3
+  name: rabbit-cluster
   log: "debug"
-  queue: "quorum"
+  queue:
+    type: "quorum"
+    max_length: 100000
   plugins:
     - rabbitmq_mqtt
-  username: "user"
-  password: "password"
+  root:
+    user: "guest"
+    password: "guest"
+  client:
+    username: "user"
+    password: "password"
   node:
     hostnames:
       - "d3vrubu-c2e34-10-01"
