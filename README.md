@@ -46,12 +46,12 @@ reliable delivery. The consumer job runs a single instance with QoS 1, processin
 duration. Both jobs use node affinity (the same as above) and pod anti-affinity to distribute workloads across different
 nodes, avoiding resource contention. They connect to RabbitMQ via NodePort `31883` (MQTT protocol) using credentials
 from the `credentials` Secret and store benchmark data in a hostPath volume `~/data`. The jobs leverage a custom Docker
-image `cmsos-x86_64-rabbitmq:0.0.1.3` containing benchmarking tools.
+image `cmsos-x86_64-rabbitmq:0.0.1.4` containing benchmarking tools.
 
 ## Prerequisites
 
 ```shell
-docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.1.3
+docker pull gitlab-registry.cern.ch/cmsos/k8sbox/rabbitmq/cmsos-x86_64-rabbitmq:0.0.1.4
 ```
 
 # Deploy RabbitMQ cluster using Kubernetes

@@ -34,7 +34,7 @@ rabbitmq:
     amqp: 30567
 
 producer:
-  version: 0.0.1.3
+  version: 0.0.1.4
   name: "benchmark-producer-job"
   instances:
     total: 2
@@ -65,7 +65,7 @@ producer:
       - "d3vrubu-c2e34-35-01"
 
 consumer:
-  version: 0.0.1.3
+  version: 0.0.1.4
   name: "benchmark-consumer-job"
   instances:
     total: 1
